@@ -5,9 +5,6 @@ selection_options=('1:Addition','2:Subtraction','3:multiplication','4:divison')
 #  Iterate through the selection options and print each one using a for loop
 for selection in selection_options:
   print(selection)
-  
-# Initialize an empty selection list
-selection_list=[]
 
 # Define a function to check the user's selection
 def check_selection():
@@ -15,25 +12,22 @@ def check_selection():
   while(True):
       # Code that might raise an exception is passed in the try block if it passes this block the except block is skipped
       #  if not errors are handeled inside the except block
-    try:
+      try:
        # ask the user to enter their selection
-      num_from_selection= input('please enter your selection:')
-      # convert a string to integer
-      num_from_selection=int(num_from_selection)
-       # Append the selection to the selection_list
-      selection_list.append(num_from_selection)
-       # Check if the selection is within the valid range
-      if(num_from_selection in range(1,5)):
+        num_from_selection= input('please enter your selection:')
+        # convert a string to integer
+        num_from_selection=int(num_from_selection)
+        if(num_from_selection in range(1,5)):
           # Code that might raise an exception is passed in the try block, if it passes this block the except block is skipped
           #  if not errors are handeled inside the except block
           try:
-            num_one= input('please enter your first number:')
-            # Ask the user to enter the first number and second numbers and chnage the string to integer
-            num_one= int(num_one)
-            num_two= input('please enter your second number:')
-            num_two= int(num_two)
-            # Return the two numbers
-            return num_one,num_two
+              num_one= input('please enter your first number:')
+              # Ask the user to enter the first number and second numbers and chnage the string to integer
+              num_one= int(num_one)
+              num_two= input('please enter your second number:')
+              num_two= int(num_two)
+              # Return the two numbers
+              return num_from_selection,num_one,num_two
           except NameError:
             # Exception handler for a specific exception (NameError)
             print("please choose numbers.")
@@ -46,19 +40,19 @@ def check_selection():
             # Generic exception handler (catches all other exceptions)
           except:
             print("Something went wrong, sorry.") 
-      else:
-          print('please select from number options provided ')
+        else:
+            print('please select from number options provided ')
            # Exception handler for a specific exception (NameError)
-    except NameError:
-      print("please choose numbers only from the selection  options.")
+      except NameError:
+            print("please choose numbers only from the selection  options.")
       # Exception handler for a specific exception (ValueError)
-    except ValueError:
-      print("please enter numbers only, NO Letters or Simbols!.")
-    except TypeError:
+      except ValueError:
+            print("please enter numbers only, NO Letters or Simbols!.")
+      except TypeError:
        print("please selelct appropriate Number value")
        # Generic exception handler (catches all other exceptions)
-    except:
-      print("Something went wrong, sorry.") 
+      except:
+        print("Something went wrong, sorry.") 
 
 # Define a function to add two numbers and return the result
 def add_two_numbers(num_one,num_two):
@@ -88,74 +82,55 @@ def div_two_numbers(num_one,num_two):
     except:
       print("Something went wrong, sorry.") 
 
-
 # Define a function to handle the user's choice for the next calculation
-def next_number_calculation():
-      # Ask the user to enter their choice to use the calculator again (y/n)
-      next_entry=input('do you want to use the calculator again?,(y/n)')
-      # Check the user's input and perform the corresponding actions
-      if(next_entry=='y'):
-      # If the user chooses 'y', clear the selection list and call check_result again
-        selection_list.clear()
-        check_result
-      elif(next_entry=='n'):
-      # If the user chooses 'n', clear the selection list and print a goodbye message
-        selection_list.clear()
+def next_number_calculation(): 
+    # Ask the user to enter their choice to use the calculator again (y/n)
+    next_entry=input('do you want to use the calculator again?,(y/n)') 
+    # Check the user's input and perform the corresponding actions
+    if(next_entry=='y'):
+    # If the user chooses 'y', clear the selection list and call check_result again
+        new_values=check_selection() 
+        main_calculator(new_values)
+    elif(next_entry=='n'):
+    # If the user chooses 'n', clear the selection list and print a goodbye message
         print('Good bye!')
-      else:
-      # If the user enters neither 'y' nor 'n', ask them to enter a valid input
-        print('please inter either y or n')
+        return
+    else:
+    # If the user enters neither 'y' nor 'n', ask them to enter a valid input
+        print('please inter either y or n & try again')
 
-while(True):
-  # Call the check_selection function to check the user's selection
-  check_result=check_selection()
-# Iterate through the selection list
-  for sel in selection_list :
- # Perform addition if selection is 1
+def main_calculator(check_result):
+    while(True):
+     # Unpack the values from the check_result tuple and assign them to the variables sel, num_one, and num_two
+     # sel represents the selected mathematical operation, while num_one and num_two represent the two numbers chosen by the user
+      sel,num_one,num_two=check_result
+    # Perform addition if selection is 1
       if(sel==1):
-          # Assign the checked result (num_one, num_two) to variables
-          num_one,num_two=check_result
-          # Call the add_two_numbers function to perform addition
           add_result=add_two_numbers(num_one,num_two)
-           # Print the result of the addition
           print(add_result)
-          # call the next_number_calculation function to ask if user wants to perform another calculation
-          next_number_calculation()
-           # Perform subtraction if selection is 2
+    # Perform subtraction if selection is 2
       elif(sel==2):
-            # Assign the checked result (num_one, num_two) to variables
-          num_one,num_two=check_result
-            # Call the sub_two_numbers function to perform subtraction
           sub_result=sub_two_numbers(num_one,num_two)
-           # Print the result of the subtraction
           print(sub_result)
-          # call the next_number_calculation function to ask if user wants to perform another calculation
-          next_number_calculation()
-          # Perform multiplication if selection is 3
+    # Perform multiplication if selection is 3
       elif(sel==3):
-          # Assign the checked result (num_one, num_two) to variables
-          num_one,num_two=check_result
           multi_result=multi_two_numbers(num_one,num_two)
-          # Call the multi_two_numbers function to perform multiplication
-          print(multi_result)
-          # Print the result of the multiplication
-          next_number_calculation()
-          # call the next_number_calculation function to ask if user wants to perform another calculation
+          # round result to the nearest whole number
+          print(round(multi_result*0.1))
+     # Perform division if selection is 4
       elif(sel==4):
-          num_one,num_two=check_result
-          # Assign the checked result (num_one, num_two) to variables
           div_result=div_two_numbers(num_one,num_two)
-          # Call the div_two_numbers function to perform division
           print(div_result)
-          # Print the result of the division
-          next_number_calculation()
-          # Call the next_number_calculation function to ask if user wants to perform another calculation
-
-
+    # Call the next_number_calculation function to ask if the user wants to perform another calculation
+      next_number_calculation()
+      # Exit the while loop using break
       break
- # Exit the while loop using break
-         
-      
+
+# Call the check_selection function to check the user's selection
+check_result=check_selection()
+# Call the main_calculator function with the initial check_result
+main_calculator(check_result)   
+
 
 
 
